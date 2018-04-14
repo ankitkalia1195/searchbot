@@ -27,6 +27,7 @@ gem 'pg', '~> 0.18'
 gem 'active_model_serializers', '~> 0.10.6'
 gem 'devise', '~>4.4.3'
 gem 'doorkeeper', git: 'git@github.com:doorkeeper-gem/doorkeeper.git'
+gem 'jquery-rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
