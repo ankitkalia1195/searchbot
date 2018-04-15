@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, only: [:sessions, :registrations], controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
 
   resources :links, only: :index
+  resources :search_tasks
 
   root 'links#index'
 
