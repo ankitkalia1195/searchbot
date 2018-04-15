@@ -25,4 +25,8 @@ class GoogleSearchParser
     @results_count ||= parsed_html.css('#resultStats').first.try(:text)
   end
 
+  def all_links_count
+    parsed_html.css('a').count
+  end
+
 end

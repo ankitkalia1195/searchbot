@@ -2,10 +2,9 @@ Rails.application.routes.draw do
   use_doorkeeper scope: 'api/v1/oauth'
   devise_for :users, only: [:sessions, :registrations], controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
 
-  resources :links, only: :index
-  resources :search_tasks
+  resources :search_tasks, only: [:index, :new, :create, :show]
 
-  root 'links#index'
+  root 'search_tasks#index'
 
   namespace :api do
     namespace :v1 do

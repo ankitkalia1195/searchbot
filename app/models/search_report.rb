@@ -14,6 +14,7 @@ class SearchReport < ApplicationRecord
     update_columns(result_stats: { top_ad_count: parsed_google_results.top_ad_urls.size,
                       bottom_ad_count: parsed_google_results.bottom_ad_urls.size,
                       total_ad_count: parsed_google_results.top_ad_urls.size + parsed_google_results.bottom_ad_urls.size,
+                      all_links_count: parsed_google_results.all_links_count,
                       regular_results_count: parsed_google_results.regular_result_urls.size,
                       results_count: parsed_google_results.results_count }, html: parsed_google_results.html_source)
 

@@ -1,0 +1,27 @@
+<%= link_to 'New Search Task', new_search_task_path, class: 'btn btn-small btn-primary' %>
+
+<table class='table'>
+  <tr>
+    <th colspan="4">Listing Search Tasks</th>
+  </tr>
+  <tr>
+    <th>Date and Time</th>
+    <th>Name</th>
+    <th>State</th>
+    <th>Actions</th>
+  </tr>
+  <% @search_tasks.each do |search_task|%>
+    <tr>
+      <td><%= search_task.created_at.to_s(:long) %></td>
+      <td><%= search_task.name %></td>
+      <td><%= search_task.state %></td>
+      <td>
+        <% if search_task.complete? %>
+          <%= link_to 'View Report', search_task_path(search_task) %>
+        <% else %>
+          Report will be enabled after task is completed.
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -19,6 +19,10 @@ class SearchTasksController < ApplicationController
     end
   end
 
+  def show
+    @search_reports = @search_task.search_reports.order('keyword').includes(:search_results)
+  end
+
   private
 
   def permitted_search_task_params
