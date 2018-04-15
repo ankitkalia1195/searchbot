@@ -92,34 +92,35 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "search_links", force: :cascade do |t|
-    t.integer "search_report_id", null: false
-    t.string "url", null: false
-    t.integer "link_type", default: 0, null: false
-    t.integer "integer", default: 0, null: false
-    t.index ["integer"], name: "index_search_links_on_integer"
-    t.index ["link_type"], name: "index_search_links_on_link_type"
-    t.index ["search_report_id"], name: "index_search_links_on_search_report_id"
-    t.index ["url"], name: "index_search_links_on_url"
-  end
-
   create_table "search_reports", force: :cascade do |t|
     t.integer "search_task_id", null: false
     t.string "keyword", null: false
-    t.jsonb "link_counters"
-    t.string "time_taken"
-    t.integer "total_result_count"
+    t.jsonb "result_stats"
     t.text "html"
     t.index ["keyword"], name: "index_search_reports_on_keyword"
-    t.index ["link_counters"], name: "index_search_reports_on_link_counters", using: :gin
+    t.index ["result_stats"], name: "index_search_reports_on_result_stats", using: :gin
+    t.index ["search_task_id", "keyword"], name: "index_search_reports_on_search_task_id_and_keyword", unique: true
     t.index ["search_task_id"], name: "index_search_reports_on_search_task_id"
+  end
+
+  create_table "search_results", force: :cascade do |t|
+    t.integer "search_report_id", null: false
+    t.string "url", null: false
+    t.integer "result_type", default: 0, null: false
+    t.integer "integer", default: 0, null: false
+    t.index ["integer"], name: "index_search_results_on_integer"
+    t.index ["result_type"], name: "index_search_results_on_result_type"
+    t.index ["search_report_id"], name: "index_search_results_on_search_report_id"
+    t.index ["url"], name: "index_search_results_on_url"
   end
 
   create_table "search_tasks", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "state", default: "pending", null: false
     t.index ["name"], name: "index_search_tasks_on_name", unique: true
+    t.index ["state"], name: "index_search_tasks_on_state"
   end
 
   create_table "users", force: :cascade do |t|
@@ -138,6 +139,6 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
-  add_foreign_key "search_links", "search_reports"
   add_foreign_key "search_reports", "search_tasks"
+  add_foreign_key "search_results", "search_reports"
 end

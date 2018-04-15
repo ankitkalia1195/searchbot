@@ -9,8 +9,10 @@ Bundler.require(*Rails.groups)
 module Searchbot
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    require 'csv'
+    require 'open-uri'
 
+    config.load_defaults 5.2
     config.active_job.queue_adapter = :delayed_job
     config.eager_load_paths << Rails.root.join('app', 'services')
     config.cors = {
