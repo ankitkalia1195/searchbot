@@ -2,8 +2,10 @@ class SearchResultsController < ApplicationController
 
   def index
     params[:q] ||= {}
+    params[:q][:s] ||= 'search_report_keyword asc'
     @search = SearchResult.ransack(params[:q])
-    @search_results = @search.result.group('search_report_id').select('search_report_id, array_agg(url) as urls, array_agg(result_type) as result_types').includes(search_report: :search_task)
+    @search_results = @search.result.includes(search_report: :search_task)
+    @search_results_grouped_by_report = @search_results.group_by(&:search_report)
   end
 
 end

@@ -1,30 +1,66 @@
+<div class = 'row'>
+  <div class='col-md-4'></div>
+  <div class='col-md-6'>
+    <h1> All Reports Data</h1>
+  </div>
+</div>
+
+<div class='border border-primary'>
+  <%= search_form_for @search do |f| %>
+      <div class='row'>
+        <div class='col-md-1'></div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :search_report_search_task_name_cont, 'Search Task Name' %><br />
+          <%= f.text_field :search_report_search_task_name_cont, class: 'form-control' %>
+        </div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :search_report_keyword_cont, 'Keyword' %><br />
+          <%= f.text_field :search_report_keyword_cont, class: 'form-control' %>
+        </div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :url_cont, 'Url' %><br />
+          <%= f.text_field :url_cont, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-md-4'></div>
+        <div class="col-md-3">
+          <%= f.submit "Filter", class: 'btn btn-primary' %>
+        </div>
+      </div><br>
+  <% end %>
+</div>
 <table class='table'>
   <tr>
     <th colspan="7">All Report Data</th>
   </tr>
 
   <tr>
-    <th>Search Task Name</th>
+    <th><%= sort_link(@search, :search_report_search_task_name, 'Search Task Name') %></th>
     <th><%= sort_link(@search, :search_report_keyword, 'Keyword') %></th>
     <th>Urls</th>
   </tr>
 
-  <% @search_results.each do |search_result|%>
+  <% @search_results_grouped_by_report.each do |search_report, search_results|%>
     <tr>
       <td>
-        <%= search_result.search_task.name %>
+        <%= search_report.search_task.name %>
       </td>
 
       <td>
-        <%= search_result.keyword %>
+        <%= search_report.keyword %>
       </td>
 
       <td>
-        <% search_result.urls.zip(search_result.result_types).each do |url, result_type| %>
-          <% if SearchResult.result_types.values_at('top_ad', 'bottom_ad').include?(result_type) %>
-            <span class='text-success'><%= url %>|
+        <% search_results.each do |search_result| %>
+          <% if search_result.ad? %>
+            <span class='text-success'><%= search_result.url %>|
           <% else %>
-            <span><%= link_to url, url %></span>|
+            <span><%= link_to search_result.url, search_result.url %></span>|
           <% end %>
         <% end %>
       </td>
