@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state", default: "pending", null: false
+    t.integer "state", default: 0, null: false
     t.index ["name"], name: "index_search_tasks_on_name", unique: true
     t.index ["state"], name: "index_search_tasks_on_state"
   end

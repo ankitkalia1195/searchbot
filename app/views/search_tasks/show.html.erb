@@ -18,15 +18,13 @@
       </td>
 
       <td>
-        <ul>
-          <% search_report.search_results.each do |search_result| %>
-            <% if search_result.ad? %>
-              <li class='text-success'><%= search_result.url %></li>
-            <% else %>
-              <li><%= link_to search_result.url, search_result.url %></li>
-            <% end %>
+        <% search_report.search_results.each do |search_result| %>
+          <% if search_result.ad? %>
+            <span class='text-success'><%= search_result.url %></span>|
+          <% else %>
+            <span><%= link_to search_result.url, search_result.url %></span>|
           <% end %>
-        </ul>
+        <% end %>
       </td>
 
     </tr>

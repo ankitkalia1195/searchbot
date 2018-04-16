@@ -1,30 +1,30 @@
 class SearchTask < ApplicationRecord
+  enum state: [:pending, :processing, :complete, :failed]
+
   has_many :search_reports, dependent: :destroy
   has_one_attached :keywords_csv
 
   after_create :enqueue_processing
 
-  validates :name, presence: true, uniqueness: { allow_blank: true }
+  validates :name, :state, presence: true, uniqueness: { allow_blank: true }
 
-  state_machine :state, initial: :pending do
-    event :process do
-      transition to: :processing, from: [:pending, :failure]
+  def process!
+    begin
+      update_column(:state, :processing)
+      parse_keywords_and_create_reports
+      update_column(:state, :complete)
+    rescue Exception => e
+      update_column(:state, :failed)
+      raise e
     end
-
-    event :complete do
-      transition to: :complete, from: :processing
-    end
-
-    after_transition to: :processing, do: :create_search_reports!
   end
 
   private
 
-  def create_search_reports!
+  def parse_keywords_and_create_reports
     keywords = CSV.parse(keywords_csv.download).flatten.map(&:strip).uniq.select(&:present?)
     search_reports.destroy_all
     keywords.each { |keyword| search_reports.create!(keyword: keyword).process! }
-    complete!
   end
 
   def enqueue_processing

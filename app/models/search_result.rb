@@ -4,6 +4,8 @@ class SearchResult < ApplicationRecord
   belongs_to :search_report
   validates :url, :result_type, presence: true
 
+  delegate :keyword, :search_task, to: :search_report
+
   def ad?
     top_ad? || bottom_ad?
   end
