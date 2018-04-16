@@ -2,7 +2,7 @@ class SearchTask < ApplicationRecord
   has_many :search_reports, dependent: :destroy
   has_one_attached :keywords_csv
 
-  after_save :enqueue_processing, on: :create
+  after_create :enqueue_processing
 
   validates :name, presence: true, uniqueness: { allow_blank: true }
 
@@ -28,6 +28,6 @@ class SearchTask < ApplicationRecord
   end
 
   def enqueue_processing
-    ProcessSearchTaskJob.new(self).delay.perform
+    ProcessSearchTaskJob.perform_later(self)
   end
 end
