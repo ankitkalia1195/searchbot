@@ -27,7 +27,7 @@ set :roles, ->{ [:app, :db, :staging, :job] }
 # Shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
 # Some plugins already add folders to shared_dirs like `mina/rails` add `public/assets`, `vendor/bundle` and many more
 # run `mina -d` to see all folders and files already included in `shared_dirs` and `shared_files`
-set :shared_dirs, fetch(:shared_dirs, []).push('log', 'public/assets', 'storage')
+set :shared_dirs, fetch(:shared_dirs, []).push('log', 'public/assets', 'storage', 'tmp')
 set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/storage.yml', 'config/master.key')
 
 # This task is the environment that is loaded for all remote run commands, such as
@@ -63,9 +63,9 @@ task :deploy do
 
     on :launch do
       in_path(fetch(:current_path)) do
+        command "RAILS_ENV=staging ./bin/delayed_job -i first --queue=default restart"
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
-        command "RAILS_ENV=staging ./bin/delayed_job -i first --queue=default restart"
       end
       command 'sudo service nginx restart'
     end
