@@ -30,4 +30,3 @@
 /config/master.key
 
 config/*.yml
-config/credentials.yml.enc
