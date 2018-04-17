@@ -5,12 +5,12 @@ module Api
       before_action :load_search_task, only: :show
 
       def index
-        @search_tasks = SearchTask.all.includes(search_reports: :search_results)
+        @search_tasks = current_resource_owner.search_tasks
         render json: @search_tasks
       end
 
       def create
-        @search_task = SearchTask.new(permitted_search_task_params)
+        @search_task = current_resource_owner.search_tasks.build(permitted_search_task_params)
         if @search_task.save
           render json: @search_task
         else
@@ -19,7 +19,7 @@ module Api
       end
 
       def show
-        render json: @search_task, included: ['search_reports', 'search_reports.search_results']
+        render json: @search_task, load_associations: true, include: ['search_reports', 'search_results']
       end
 
       private
@@ -29,7 +29,7 @@ module Api
       end
 
       def load_search_task
-        @search_task = SearchTask.find_by(id: params[:id])
+        @search_task = current_resource_owner.search_tasks.find_by(id: params[:id])
         head 404 unless @search_task.present?
       end
 

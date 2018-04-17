@@ -15,8 +15,10 @@
       <div class='col-md-2'>
       </div>
       <div class='col-md-4'>
-        <%= link_to 'Search Tasks', search_tasks_path, class: 'btn btn-primary' %>
-        <%= link_to 'Search Results(All Reports)', search_results_path, class: 'btn btn-primary' %>
+        <% if user_signed_in? %>
+          <%= link_to 'Search Tasks', search_tasks_path, class: 'btn btn-primary' %>
+          <%= link_to 'Search Results(All Reports)', search_results_path, class: 'btn btn-primary' %>
+        <% end %>
       </div>
       <div class='col-md-4'>
       </div>

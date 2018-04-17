@@ -115,12 +115,14 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
   end
 
   create_table "search_tasks", force: :cascade do |t|
+    t.integer "user_id"
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state", default: 0, null: false
-    t.index ["name"], name: "index_search_tasks_on_name", unique: true
     t.index ["state"], name: "index_search_tasks_on_state"
+    t.index ["user_id", "name"], name: "index_search_tasks_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_search_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -141,4 +143,5 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "search_reports", "search_tasks"
   add_foreign_key "search_results", "search_reports"
+  add_foreign_key "search_tasks", "users"
 end

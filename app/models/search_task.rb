@@ -1,12 +1,15 @@
 class SearchTask < ApplicationRecord
   enum state: [:pending, :processing, :complete, :failed]
 
+  belongs_to :user
   has_many :search_reports, dependent: :destroy
+  has_many :search_results, through: :search_reports
   has_one_attached :keywords_csv
 
   after_create :enqueue_processing
 
-  validates :name, :state, presence: true, uniqueness: { allow_blank: true }
+  validates :user, :name, :state, presence: true
+  validates :name, uniqueness: { scope: :user_id }
 
   def process!
     begin
