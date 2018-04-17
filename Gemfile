@@ -31,7 +31,7 @@ gem 'jquery-rails', '~>4.3.1'
 gem 'delayed_job_active_record'
 gem 'ransack', '~>1.8.8'
 gem 'activerecord-import', '~>0.22.0'
-
+gem 'mina'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
