@@ -5,7 +5,7 @@ module Api
       before_action :load_search_task, only: :show
 
       def index
-        @search_tasks = SearchTask.all
+        @search_tasks = SearchTask.all.includes(search_reports: :search_results)
         render json: @search_tasks
       end
 

@@ -18,7 +18,6 @@ set :repository, 'git@github.com:ankitkalia1195/searchbot.git'
 set :branch, 'search_tasks'
 set :rails_env, 'staging'
 set :roles, ->{ [:app, :db, :staging, :job] }
-set :term_mode, :pretty
 
 # Optional settings:
 #   set :user, 'foobar'          # Username in the server to SSH to.
@@ -67,7 +66,8 @@ task :deploy do
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
       end
-      command 'sudo service nginx:restart'
+      command 'sudo service nginx restart'
+      command "cd #{app_path} ; RAILS_ENV=#{rails_env} ./bin/delayed_job -i first --queue=default restart"
     end
   end
 

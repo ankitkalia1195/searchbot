@@ -1,4 +1,6 @@
-module V1
-  class ApplicationSerializer < ActiveModel::Serializer
+module Api
+  module V1
+    class ApplicationSerializer < ActiveModel::Serializer
+    end
   end
 end
