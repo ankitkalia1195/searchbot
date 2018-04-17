@@ -65,9 +65,9 @@ task :deploy do
       in_path(fetch(:current_path)) do
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
+        command "RAILS_ENV=staging ./bin/delayed_job -i first --queue=default restart"
       end
       command 'sudo service nginx restart'
-      command "cd #{app_path} ; RAILS_ENV=#{rails_env} ./bin/delayed_job -i first --queue=default restart"
     end
   end
 
