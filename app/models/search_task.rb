@@ -13,8 +13,6 @@ class SearchTask < ApplicationRecord
 
   validate :ensure_document_in_csv_format
 
-  private
-
   def process!
     begin
       update_column(:state, :processing)
