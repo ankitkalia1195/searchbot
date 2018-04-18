@@ -1,0 +1,26 @@
+<%= link_to 'Back to listing', search_tasks_path, class: 'btn btn-small btn-primary' %>
+
+<div class = 'row'>
+  <div class='col-md-4'></div>
+  <div class='col-md-4 border border-primary'>
+    <h1> Create New Task </h1>
+    <%= form_for @search_task do |f| %>
+      <div class="field form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+        <span><%= @search_task.errors[:name].to_sentence %></span>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :keywords_csv %><br />
+        <%= f.file_field :keywords_csv, class: 'form-control' %>
+        <span><%= @search_task.errors[:keywords_csv].to_sentence %></span>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Save", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

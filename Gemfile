@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.2'
+ruby '2.4.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -27,8 +27,12 @@ gem 'pg', '~> 0.18'
 gem 'active_model_serializers', '~> 0.10.6'
 gem 'devise', '~>4.4.3'
 gem 'doorkeeper', git: 'git@github.com:doorkeeper-gem/doorkeeper.git'
-gem 'jquery-rails'
-
+gem 'jquery-rails', '~>4.3.1'
+gem 'delayed_job_active_record'
+gem 'ransack', '~>1.8.8'
+gem 'activerecord-import', '~>0.22.0'
+gem 'mina', '~>1.2.3'
+gem 'daemons', '~>1.2.6'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

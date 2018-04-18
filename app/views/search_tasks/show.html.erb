@@ -1,0 +1,33 @@
+<%= link_to 'Back to listing', search_tasks_path, class: 'btn btn-small btn-primary' %> <br><br>
+
+<table class='table'>
+  <tr>
+    <th colspan="7">Search Task <%= @search_task.name %> Report</th>
+  </tr>
+
+  <% @search_reports.each do |search_report|%>
+    <tr>
+      <td><%= search_report.keyword %></td>
+
+      <td>
+        #Top Ad: <b><%= search_report.result_stats['top_ad_count'] %></b><br>
+        #Bottom Ad: <b><%= search_report.result_stats['bottom_ad_count'] %></b><br>
+        #Total Ad: <b><%= search_report.result_stats['total_ad_count'] %></b><br>
+        #Non Adwords: <b><%= search_report.result_stats['regular_results_count'] %></b><br>
+        #All Links: <b><%= search_report.result_stats['all_links_count'] %></b><br>
+        #Results: <b><%= search_report.result_stats['results_count'] %></b>
+      </td>
+
+      <td>
+        <% search_report.search_results.each do |search_result| %>
+          <% if search_result.ad? %>
+            <span class='text-success'><%= search_result.url %></span><br>
+          <% else %>
+            <span><%= link_to search_result.url, search_result.url %></span><br>
+          <% end %>
+        <% end %>
+      </td>
+
+    </tr>
+  <% end %>
+</table>

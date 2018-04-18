@@ -12,14 +12,47 @@
   <body>
     <br>
     <div class='row'>
-      <div class='col-md-10'>
+      <div class='col-md-2'>
       </div>
+      <div class='col-md-4'>
+        <% if user_signed_in? %>
+          <%= link_to 'Search Tasks', search_tasks_path, class: 'btn btn-primary' %>
+          <%= link_to 'Search Results(All Reports)', search_results_path, class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+      <div class='col-md-4'>
+      </div>
+
       <% if user_signed_in? %>
         <div class='col-md-2'>
           <%= link_to 'Logout', destroy_user_session_path, method: 'delete', class: 'btn btn-primary' %>
         </div>
       <% end %>
-    </div><br><br>
+    </div><br>
+
+
+    <div class='row'>
+      <% if flash[:alert].present? || flash[:error].present? %>
+        <div class='col-md-4'>
+        </div>
+        <div class='col-md-2'>
+          <div class='alert alert-warning'>
+            <%= flash[:alert] || flash[:error] %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if flash[:success].present? || flash[:notice].present? %>
+        <div class='col-md-4'>
+        </div>
+        <div class='col-md-2'>
+          <div class='alert alert-success'>
+            <%= flash[:success] || flash[:notice] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

@@ -12,7 +12,3 @@ module Api
     end
   end
 end
-
-# curl -X POST -d 'grant_type=password&email=ankitkalia.dev@gmail.com&password=123456' localhost:3000/api/v1/oauth/token
-
-# curl -X GET -d 'access_token=173e4dcd589de113287d1f6910deee229e3faf28c90589a76584ae899062f58' localhost:3000/api/v1/links

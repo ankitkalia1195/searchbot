@@ -1,0 +1,93 @@
+<div class = 'row'>
+  <div class='col-md-4'></div>
+  <div class='col-md-6'>
+    <h1> All Reports Data</h1>
+  </div>
+</div>
+
+<div class='border border-primary'>
+  <%= search_form_for @search do |f| %>
+      <div class='row'>
+        <div class='col-md-1'></div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :search_report_search_task_name_cont, 'Search Task Name' %><br />
+          <%= f.text_field :search_report_search_task_name_cont, class: 'form-control' %>
+        </div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :search_report_keyword_cont, 'Keyword' %><br />
+          <%= f.text_field :search_report_keyword_cont, class: 'form-control' %>
+        </div>
+
+        <div class="field form-group col-md-3">
+          <%= f.label :url_cont, 'Url' %><br />
+          <%= f.text_field :url_cont, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-md-3'></div>
+
+        <div class="field form-group col-md-2">
+          <%= f.label :search_report_total_ad_count_gteq, 'Minimum Ads Count' %><br />
+          <%= f.number_field :search_report_total_ad_count_gteq, class: 'form-control' %>
+        </div>
+        <div class="field form-group col-md-2">
+          <%= f.label :search_report_total_ad_count_lteq, 'Maximum Ads Count' %><br />
+          <%= f.number_field :search_report_total_ad_count_lteq, class: 'form-control' %>
+        </div>
+
+      </div>
+
+      <div class='row'>
+        <div class='col-md-4'></div>
+        <div class="col-md-3">
+          <%= f.submit "Filter", class: 'btn btn-primary' %>
+        </div>
+      </div><br>
+  <% end %>
+</div>
+<table class='table'>
+  <tr>
+    <th colspan="7">All Report Data</th>
+  </tr>
+
+  <tr>
+    <th><%= sort_link(@search, :search_report_search_task_name, 'Search Task Name') %></th>
+    <th><%= sort_link(@search, :search_report_keyword, 'Keyword') %></th>
+    <th>Urls</th>
+  </tr>
+
+  <% @search_results_grouped_by_report.each do |search_report, search_results|%>
+    <tr>
+      <td>
+        <%= search_report.search_task.name %>
+      </td>
+
+      <td>
+        <%= search_report.keyword %>
+      </td>
+
+      <td>
+        <% search_results.each do |search_result| %>
+          <% if search_result.ad? %>
+            <span class='text-success'><%= search_result.url %><br>
+          <% else %>
+            <span><%= link_to search_result.url, search_result.url %></span><br>
+          <% end %>
+        <% end %>
+      </td>
+
+      <td>
+        #Top Ad: <b><%= search_report.result_stats['top_ad_count'] %></b><br>
+        #Bottom Ad: <b><%= search_report.result_stats['bottom_ad_count'] %></b><br>
+        #Total Ad: <b><%= search_report.result_stats['total_ad_count'] %></b><br>
+        #Non Adwords: <b><%= search_report.result_stats['regular_results_count'] %></b><br>
+        #All Links: <b><%= search_report.result_stats['all_links_count'] %></b><br>
+        #Results: <b><%= search_report.result_stats['results_count'] %></b>
+      </td>
+
+    </tr>
+  <% end %>
+</table>
