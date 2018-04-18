@@ -3,7 +3,7 @@ class SearchTasksController < ApplicationController
   before_action :load_search_task, only: :show
 
   def index
-    @search_tasks = SearchTask.all
+    @search_tasks = current_user.search_tasks
   end
 
   def new
@@ -11,12 +11,16 @@ class SearchTasksController < ApplicationController
   end
 
   def create
-    @search_task = SearchTask.new(permitted_search_task_params)
+    @search_task = current_user.search_tasks.build(permitted_search_task_params)
     if @search_task.save
       redirect_to search_tasks_path
     else
       render :new
     end
+  end
+
+  def show
+    @search_reports = @search_task.search_reports.order('keyword').includes(:search_results)
   end
 
   private
@@ -26,7 +30,7 @@ class SearchTasksController < ApplicationController
   end
 
   def load_search_task
-    @search_task = SearchTask.find_by(id: params[:id])
+    @search_task = current_user.search_tasks.find_by(id: params[:id])
     redirect_to search_task_path unless @search_task.present?
   end
 
