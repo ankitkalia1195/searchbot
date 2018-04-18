@@ -5,6 +5,7 @@ class CreateSearchReports < ActiveRecord::Migration[5.2]
       t.string :keyword, null: false, index: true
       t.jsonb :result_stats
       t.text :html
+      t.timestamps null: false
     end
     add_index :search_reports, :result_stats, using: :gin
     add_index :search_reports, [:search_task_id, :keyword], unique: true

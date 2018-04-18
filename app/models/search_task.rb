@@ -11,6 +11,10 @@ class SearchTask < ApplicationRecord
   validates :user, :name, :state, presence: true
   validates :name, uniqueness: { scope: :user_id }
 
+  validate :ensure_document_in_csv_format
+
+  private
+
   def process!
     begin
       update_column(:state, :processing)
@@ -33,4 +37,11 @@ class SearchTask < ApplicationRecord
   def enqueue_processing
     ProcessSearchTaskJob.perform_later(self)
   end
+
+  def ensure_document_in_csv_format
+    if !keywords_csv.attached? || keywords_csv.content_type != 'text/csv'
+      errors.add(:keywords_csv, 'Must be a csv file')
+    end
+  end
+
 end

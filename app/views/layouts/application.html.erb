@@ -28,7 +28,31 @@
           <%= link_to 'Logout', destroy_user_session_path, method: 'delete', class: 'btn btn-primary' %>
         </div>
       <% end %>
-    </div><br><br>
+    </div><br>
+
+
+    <div class='row'>
+      <% if flash[:alert].present? || flash[:error].present? %>
+        <div class='col-md-4'>
+        </div>
+        <div class='col-md-2'>
+          <div class='alert alert-warning'>
+            <%= flash[:alert] || flash[:error] %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if flash[:success].present? || flash[:notice].present? %>
+        <div class='col-md-4'>
+        </div>
+        <div class='col-md-2'>
+          <div class='alert alert-success'>
+            <%= flash[:success] || flash[:notice] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

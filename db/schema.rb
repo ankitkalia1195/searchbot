@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
     t.string "keyword", null: false
     t.jsonb "result_stats"
     t.text "html"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["keyword"], name: "index_search_reports_on_keyword"
     t.index ["result_stats"], name: "index_search_reports_on_result_stats", using: :gin
     t.index ["search_task_id", "keyword"], name: "index_search_reports_on_search_task_id_and_keyword", unique: true
@@ -108,6 +110,8 @@ ActiveRecord::Schema.define(version: 2018_04_15_030744) do
     t.string "url", null: false
     t.integer "result_type", default: 0, null: false
     t.integer "integer", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["integer"], name: "index_search_results_on_integer"
     t.index ["result_type"], name: "index_search_results_on_result_type"
     t.index ["search_report_id"], name: "index_search_results_on_search_report_id"

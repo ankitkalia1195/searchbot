@@ -8,11 +8,13 @@
       <div class="field form-group">
         <%= f.label :name %><br />
         <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+        <span><%= @search_task.errors[:name].to_sentence %></span>
       </div>
 
       <div class="field form-group">
         <%= f.label :keywords_csv %><br />
         <%= f.file_field :keywords_csv, class: 'form-control' %>
+        <span><%= @search_task.errors[:keywords_csv].to_sentence %></span>
       </div>
 
       <div class="actions">
