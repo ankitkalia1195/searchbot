@@ -21,13 +21,17 @@ module Api
       def search_results
         if @instance_options[:load_associations].present?
           if @instance_options[:search_result_ids].present?
-            object.search_reports.where(id: @instance_options[:search_result_ids])
+            object.search_results.where(id: @instance_options[:search_result_ids])
           else
             object.search_results
           end
         else
           []
         end
+      end
+
+      def created_at
+        object.created_at.to_s(:long)
       end
 
     end

@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby 2.4.4, Rails 5.2
 
-Things you may want to cover:
+Steps -
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1) git clone
+2) Setup database.yml and storage.yml(refer .example files)
+3) bundle
+4) rake db:create
+5) rake db:migrate
+6) rspec spec(to run tests)
+7) rails s(to start server)
+8) rake jobs:work(to start job worker)

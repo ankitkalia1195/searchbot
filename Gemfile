@@ -28,11 +28,12 @@ gem 'active_model_serializers', '~> 0.10.6'
 gem 'devise', '~>4.4.3'
 gem 'doorkeeper', git: 'git@github.com:doorkeeper-gem/doorkeeper.git'
 gem 'jquery-rails', '~>4.3.1'
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '~> 4.1.3'
 gem 'ransack', '~>1.8.8'
 gem 'activerecord-import', '~>0.22.0'
 gem 'mina', '~>1.2.3'
 gem 'daemons', '~>1.2.6'
+gem 'shoulda-matchers', '~> 3.1'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -65,6 +66,8 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15', '< 4.0'
   gem 'selenium-webdriver'
+  gem 'rspec-rails', '~>3.7.2'
+  gem 'factory_bot_rails', '~>4.8.2'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
