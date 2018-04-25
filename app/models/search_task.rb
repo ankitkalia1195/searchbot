@@ -16,9 +16,11 @@ class SearchTask < ApplicationRecord
   def process!
     begin
       update_column(:state, :processing)
-      parse_keywords_and_create_reports
-      update_column(:state, :complete)
-    rescue Exception => e
+      ActiveRecord::Base.transaction do
+        parse_keywords_and_create_reports
+        update_column(:state, :complete)
+      end
+    rescue StandardError => e
       update_column(:state, :failed)
       raise e
     end
