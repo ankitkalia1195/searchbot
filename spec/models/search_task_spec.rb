@@ -55,7 +55,7 @@ RSpec.describe SearchTask do
 
     context 'invalid file' do
       before do
-        search_task.keywords_csv.attach(io: File.open(Rails.root.join('spec', 'factories', 'text', 'keywords.txt')), filename: 'keywords.txt', content_type: 'text/txt')
+        search_task.keywords_csv.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'keywords.txt')), filename: 'keywords.txt', content_type: 'text/txt')
         search_task.valid?
       end
       it { expect(search_task.errors[:keywords_csv]).to include('Must be a csv file') }

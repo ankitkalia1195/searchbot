@@ -46,7 +46,7 @@ RSpec.describe SearchTasksController, type: :request do
   end
 
   describe '#create' do
-    let(:csv_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'csv', 'keywords.csv'), 'text/csv') }
+    let(:csv_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'keywords.csv'), 'text/csv') }
 
     def send_request(params={})
       post '/api/v1/search_tasks/', params: params.merge(token_params)
